@@ -1,9 +1,9 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "threeJs": {
+    "proj": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -15,8 +15,11 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-builders/custom-webpack:browser",
           "options": {
+            "customWebpackConfig": {
+              "path": "./webpack.config.js"
+            },
             "outputPath": "dist/threeJs",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -64,13 +67,16 @@
           }
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
-            "browserTarget": "threeJs:build"
+            "customWebpackConfig": {
+              "path": "./webpack.config.js"
+            },
+            "browserTarget": "proj:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "threeJs:build:production"
+              "browserTarget": "proj:build:production"
             }
           }
         },
@@ -123,6 +129,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "threeJs"
+    }
+  },
+  "defaultProject": "threeJs",
+  "cli": {
+    "analytics": false
+  }
 }
